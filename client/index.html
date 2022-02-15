@@ -12,12 +12,12 @@
 <body>
 
     <div class="chat-wrapper">
-        <div class="message-window">
+        <div id="messages">
         </div>
-        <div class="input-panel">
-            <input class="input-field" type="text">
-            <button class="submit-button">Send</button>
-        </div>
+        <form name="publish">
+            <input class="input-field" type="text" name="message">
+            <input type="submit" value="Send">
+        </form>
     </div>
     <script src="chat.js"></script>
 </body>

@@ -6,7 +6,7 @@ const users = [];
 
 wss.on('connection', function connection(ws) {
     users.push(ws);
-    
+
     ws.on('message', function incoming(message) {
         const recievers = users.filter(user => user !== ws);
 
