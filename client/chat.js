@@ -1,5 +1,5 @@
-function getUserName() {
+const getUserName = () => {
   let name = prompt("Please enter your name");
 }
 
-getUserName();
+// getUserName();
