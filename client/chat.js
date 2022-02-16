@@ -7,20 +7,33 @@ let textMessage = document.getElementById('input-field');
 
 btn.onclick = () => { //клик по кнопке send
   let outgoingMessage = textMessage.value + '|' + userName;
+  createMessage(outgoingMessage, 0)
   socket.send(outgoingMessage); //отправляем сообщение
 }
 
 
-socket.onmessage = function (event) {   //принимаем сообщение
-  console.log(`Данные получены с сервера: ${event.data}`);
+socket.onmessage = event => {   //принимаем сообщение
+  createMessage(event.data, 1)
+};
+
+const createMessage = (msg, curUser) => {
   let messageElem = document.createElement('div');
   let message = document.createElement('div');
   let p = document.createElement('p');
-  p.setAttribute('class', 'userName');
-  p.innerHTML = event.data.substring(event.data.lastIndexOf('|') + 1);
-  message.setAttribute('class', 'message')
-  message.textContent = event.data.split('|')[0];
+  message.setAttribute('class', 'message-content')
+  if (curUser === 0) {
+    messageElem.setAttribute('class', 'my-message');
+    p.setAttribute('class', 'my-name');
+    message.setAttribute('class', 'my-message-content');
+
+  } else {
+    messageElem.setAttribute('class', 'user-message');
+    p.setAttribute('class', 'user-name');
+    message.setAttribute('class', 'user-message-content');
+  }
+  p.innerHTML = msg.substring(msg.lastIndexOf('|') + 1);
+  message.textContent = msg.split('|')[0];
   messageElem.appendChild(p);
   messageElem.appendChild(message);
-  document.getElementById('messages').appendChild(messageElem);
-};
+  document.getElementById('messages').prepend(messageElem);
+}
