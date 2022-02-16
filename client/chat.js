@@ -1,17 +1,19 @@
-let userName = prompt("Please enter your name");
+let userName = prompt('Please enter your name');
 let btn = document.getElementById('send');
 let textMessage = document.getElementById('input-field');
 
-let socket = new WebSocket("ws://localhost:8080");
+let socket = new WebSocket('ws://localhost:8080');
 btn.onclick = () => { //клик по кнопке send
-  if (textMessage.value === "") { return alert('Nothing to send!') }
+  if (textMessage.value === '') {
+    return alert('Nothing to send!')
+  }
   let outgoingMessage = userName + '|' + textMessage.value + '|' + new Date().toLocaleTimeString('en-US');
   createMessage(outgoingMessage, 0) //передаём 0 = значит исходящее сообщение
   socket.send(outgoingMessage); //отправляем сообщение
-  textMessage.value = "";
+  textMessage.value = '';
 }
 
-socket.onmessage = event => {   //принимаем сообщение
+socket.onmessage = event => { //принимаем сообщение
   createMessage(event.data, 1) //передаём 1 = значит входящее сообщение
 };
 
@@ -20,7 +22,7 @@ const createMessage = (msg, curUser) => { //создаём сообщение и
   let name = document.createElement('p');
   let message = document.createElement('div');
   let time = document.createElement('p');
-  if (curUser === 0) {    //определяем сообщение входящее или исходящщее
+  if (curUser === 0) { //определяем сообщение входящее или исходящщее
     messageElem.setAttribute('class', 'my-message');
     name.setAttribute('class', 'my-name');
     message.setAttribute('class', 'my-message-content');
